@@ -1,147 +1,293 @@
 ﻿@model ecom.Models.ViewModel.DashboardVM
 
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 <!-- Swiper CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
 
+<style>
+    :root {
+        --ocean-green: #4CAF98;
+        --ocean-green-light: #8DD1BD;
+        --ocean-green-dark: #3B8A76;
+    }
 
-<div class="container mt-4">
-    <div class="row">
-        <!-- Left Side: Categories -->
-        <div class="col-md-3">
-            <div class="card shadow-sm border-0">
-                <div class="card-header bg-success text-white">
-                    <h5 class="fw-bold mb-0">Categories</h5>
+    /* Override Bootstrap success colors with ocean green */
+    .bg-success, .btn-success {
+        background-color: var(--ocean-green) !important;
+        border-color: var(--ocean-green) !important;
+    }
+
+    .text-success {
+        color: var(--ocean-green) !important;
+    }
+
+    .border-success {
+        border-color: var(--ocean-green) !important;
+    }
+
+    .btn-outline-success {
+        color: var(--ocean-green) !important;
+        border-color: var(--ocean-green) !important;
+    }
+
+        .btn-outline-success:hover {
+            background-color: var(--ocean-green) !important;
+            color: white !important;
+        }
+
+    /* Swiper specific styling */
+    .swiper {
+        width: 100%;
+        height: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+        overflow: hidden;
+        list-style: none;
+        padding: 0;
+        z-index: 1;
+    }
+
+    .swiper-wrapper {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        display: flex;
+        transition-property: transform;
+        box-sizing: content-box;
+    }
+
+    .swiper-slide {
+        flex-shrink: 0;
+        height: 100%;
+        position: relative;
+        transition-property: transform;
+        width: 100%;
+    }
+
+    .swiper-button-next, .swiper-button-prev {
+        color: var(--ocean-green) !important;
+    }
+
+    .swiper-pagination-bullet-active {
+        background-color: var(--ocean-green) !important;
+    }
+
+    /* Product card hover effect */
+    .product-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+        }
+
+    /* Category sidebar styling */
+    .category-list .list-group-item:hover {
+        background-color: #f8f9fa;
+    }
+
+    .category-list .list-group-item a:hover {
+        color: var(--ocean-green) !important;
+    }
+</style>
+
+<!-- Hero Banner Section -->
+<div class="container-fluid px-0 mb-4">
+    <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://img.freepik.com/free-vector/fashion-template-design_23-2150368859.jpg?t=st=1745381110~exp=1745384710~hmac=4790d814aa95ccff6082b208f14350dbfd78a83df705dd5e5aaa7fb852f4fc02&w=1380" class="d-block w-100" alt="First slide" style="object-fit: cover; height: 300px;">
+                <div class="carousel-caption d-none d-md-block">
+                    <a href="/ProductItem/Cart" class="btn btn-light px-4 py-2">Shop Now</a>
                 </div>
-                @* <div style="max-height: 250px; overflow-y: auto;"> *@
-                <ul class="list-group list-group-flush">
-                    @foreach (var item in Model.CategoryInfo)
-                    {
-                        <li class="list-group-item py-2">
-                            <a class="nav-link text-dark" href="/Category/CategoryDetail?id=@item.CategoryId">
-                                @item.CategoryName
-                            </a>
-                        </li>
-                    }
-                </ul>
-                @* </div> *@
+            </div>
+            <div class="carousel-item">
+                <img src="https://img.freepik.com/free-vector/fashion-template-design_23-2150368863.jpg?t=st=1745381029~exp=1745384629~hmac=70afc0fe8e6c665a53c7f22b40d43070d9a57ae169b78145502661bcc7263e16&w=1380" class="d-block w-100" alt="Second slide" style="object-fit: cover; height: 300px;">
+                <div class="carousel-caption d-none d-md-block">
+                    <a href="/ProductItem/Cart" class="btn btn-light px-4 py-2">Shop Now</a>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://img.freepik.com/free-photo/travel-concept-close-up-portrait-young-beautiful-attractive-redhair-girl-wtih-trendy-hat-sunglas_1258-118306.jpg?t=st=1745380761~exp=1745384361~hmac=73c7d1b9681e0aa5b8d55fcc176e21ff48fce6c26bb29731bbfce5e62e8451fe&w=1380" class="d-block w-100" alt="Third slide" style="object-fit: cover; height: 300px;">
+                <div class="carousel-caption d-none d-md-block">
+                    <a href="/ProductItem/Cart" class="btn btn-light px-4 py-2">Shop Now</a>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="container">
+    <div class="row g-4">
+        <!-- Left Side: Categories -->
+        <div class="col-lg-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white border-bottom border-3 border-success">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-grid-3x3-gap-fill text-success me-2"></i>
+                        <h5 class="fw-bold mb-0">Categories</h5>
+                    </div>
+                </div>
+                <div style="max-height: 400px; overflow-y: auto;" class="category-list">
+                    <ul class="list-group list-group-flush">
+                        @foreach (var item in Model.CategoryInfo)
+                        {
+                            <li class="list-group-item border-0 py-2 px-3">
+                                <a class="nav-link d-flex align-items-center text-dark" href="/SingleCategory/CategoryDetail?id=@item.CategoryId">
+                                    <i class="bi bi-chevron-right text-success me-2 small"></i>
+                                    @item.CategoryName
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
             </div>
         </div>
 
-        <!-- Right Side: Main Banner Carousel -->
-        <div class="col-md-9">
-            <div class="flex">
-
-                <div class="col">
-                    <!-- Bootstrap Carousel -->
-                    <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-inner rounded shadow-lg">
-                            <div class="carousel-item active">
-                                <img src="https://rukminim2.flixcart.com/fk-p-flap/1620/270/image/5ef3fe0c6c87bc5b.jpg?q=20" class="d-block w-100" alt="First slide" style="object-fit: cover; height: 140px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25); transition: transform 0.3s ease;">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="https://rukminim2.flixcart.com/fk-p-flap/1620/270/image/373914b13f0b4dfb.jpg?q=20" class="d-block w-100" alt="Second slide" style="object-fit: cover; height: 140px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25); transition: transform 0.3s ease;">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="https://rukminim2.flixcart.com/fk-p-flap/1620/270/image/bfdf65854780356a.jpeg?q=20" class="d-block w-100" alt="Third slide" style="object-fit: cover; height: 140px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25); transition: transform 0.3s ease;">
-                            </div>
+        <!-- Right Side: Featured Products -->
+        <div class="col-lg-9">
+            <!-- Featured Products Section -->
+            @{
+                var featuredProducts = Model.ProductItems.Take(4).ToList();
+                if (featuredProducts.Any())
+                {
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="fw-bold text-dark mb-0">
+                                <i class="bi bi-star-fill text-warning me-2"></i>Featured Products
+                            </h4>
+                            <a href="#" class="text-decoration-none text-success">View All</a>
                         </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="mt-5 shadow-lg">
-                    <div class="hero-gradient">
-                        <div class="container">
-                            <div class="row align-items-center">
-                                <div class="col-md-6">
-                                    <h1 class="display-4 fw-bold mb-4">Discover Amazing Deals</h1>
-                                    <p class="lead">Explore our wide range of products with unbeatable prices</p>
-                                    <button class="btn btn-light shopnow text-success fw-semibold px-4 py-2 rounded-pill">
-                                        Go To Cart
-                                    </button>
+                        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-3">
+                            @foreach (var product in featuredProducts)
+                            {
+                                <div class="col">
+                                    <div class="card h-100 border-0 shadow-sm product-card">
+                                        <div class="position-relative">
+                                            <img src="@product.Thumbnail" class="card-img-top" alt="@product.ProductItemName" style="height: 180px; object-fit: cover;">
+                                            <button class="btn btn-sm btn-success position-absolute bottom-0 end-0 m-2 rounded-circle btnCart" data-pk="@product.ProductItemId" data-name="@product.ProductItemName" data-price="@product.UnitPrice">
+                                                <i class="bi bi-cart-plus"></i>
+                                            </button>
+                                        </div>
+                                        <div class="card-body">
+                                            <h6 class="card-title text-truncate fw-bold">@product.ProductItemName</h6>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <span class="fw-bold text-success">Rs @product.UnitPrice</span>
+                                                <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#mdlViewMore_@product.ProductItemId">
+                                                    <i class="bi bi-eye"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            }
                         </div>
                     </div>
-                </div>
+                }
+            }
 
-            </div>
+            <!-- Product Categories Section -->
+            @foreach (var category in Model.CategoryInfo)
+            {
+                var categoryProducts = Model.ProductItems.Where(x => x.CategoryId == category.CategoryId).ToList();
+                if (categoryProducts.Any())
+                {
+                    var swiperId = $"swiper-{category.CategoryId}";
+                    <div class="mb-5">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="fw-bold text-dark mb-0">@category.CategoryName</h4>
+                            <a href="/Category/CategoryDetail?id=@category.CategoryId" class="text-decoration-none text-success">View All</a>
+                        </div>
+
+                        <!-- Swiper container with unique ID for this category -->
+                        <div class="swiper" id="@swiperId">
+                            <div class="swiper-wrapper">
+                                @foreach (var product in categoryProducts)
+                                {
+                                    <div class="swiper-slide">
+                                        <div class="card h-100 border-0 shadow-sm product-card">
+                                            <div class="position-relative">
+                                                <img src="@product.Thumbnail" class="card-img-top" alt="@product.ProductItemName" style="height: 180px; object-fit: cover;">
+                                                <div class="position-absolute top-0 start-0 m-2">
+                                                    <span class="badge bg-success">New</span>
+                                                </div>
+                                            </div>
+                                            <div class="card-body pb-0">
+                                                <h6 class="card-title text-truncate fw-bold">@product.ProductItemName</h6>
+                                                <p class="text-success fw-bold mb-2">Rs @product.UnitPrice</p>
+                                            </div>
+                                            <div class="card-footer bg-white border-0 pt-0">
+                                                <div class="d-flex gap-2">
+                                                    <button type="button" class="btn btn-success flex-grow-1 btnCart" data-pk="@product.ProductItemId" data-name="@product.ProductItemName" data-price="@product.UnitPrice">
+                                                        <i class="bi bi-cart-plus"></i> Add
+                                                    </button>
+                                                    <button type="button" class="btn btn-outline-success btnView" data-bs-toggle="modal" data-bs-target="#mdlViewMore_@product.ProductItemId">
+                                                        <i class="bi bi-eye"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            <!-- Add navigation buttons for this swiper -->
+                            <div class="swiper-button-next" id="swiper-button-next-@category.CategoryId"></div>
+                            <div class="swiper-button-prev" id="swiper-button-prev-@category.CategoryId"></div>
+                            <!-- Add pagination for this swiper -->
+                            <div class="swiper-pagination" id="swiper-pagination-@category.CategoryId"></div>
+                        </div>
+                    </div>
+                }
+            }
         </div>
     </div>
 </div>
 
-<!-- Product Carousels for Each Category -->
-<div class="container mt-4">
-    @foreach (var category in Model.CategoryInfo)
-    {
-        var categoryProducts = Model.ProductItems.Where(x => x.CategoryId == category.CategoryId).ToList();
-        if (categoryProducts.Any())
-        {
-            var swiperId = "swiper-" + category.CategoryId;
-            <div class="category-section mt-5">
-                <h4 class="fw-bold">@category.CategoryName</h4>
-                <!-- Swiper wrapper for smooth scroll carousel -->
-                <div class="swiper @swiperId">
-                    <div class="swiper-wrapper p-2">
-                        @foreach (var product in categoryProducts)
-                        {
-                            <!-- Swiper slide for smooth scroll carousel -->
-                            <div class="swiper-slide">
-                                <div class="card card-custom border-0 rounded-3 h-100">
-                                    <div class="card-body d-flex flex-column align-items-center">
-                                        <img src="@product.Thumbnail" class="img-fluid rounded w-100" style="height: 200px; object-fit: cover;" alt="Product Image">
-                                        <h6 class="fw-bold mt-2 text-center">@product.ProductItemName</h6>
-                                        <span class="badge bg-success text-white">Rs @product.UnitPrice</span>
-                                    </div>
-                                    <div class="card-footer d-flex justify-content-between">
-                                        <button type="button" class="btn btn-primary btn-sm btnCart" data-pk="@product.ProductItemId" data-name="@product.ProductItemName" data-price="@product.UnitPrice">
-                                            <i class="fa fa-cart-plus"></i> Add to Cart
-                                        </button>
-                                        <button type="button" class="btn btn-outline-success btn-sm btnView" data-bs-toggle="modal" data-bs-target="#mdlViewMore_@product.ProductItemId" data-pk="@product.ProductItemId">
-                                            <i class="fa fa-eye"></i> View
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                    </div>
-                </div>
-            </div>
-        }
-    }
-</div>
-
-<!-- Modal -->
+<!-- Product Quick View Modals -->
 @foreach (var item in Model.ProductItems)
 {
-    <div class="modal fade" id="mdlViewMore_@item.ProductItemId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="mdlViewMore_@item.ProductItemId" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
-            <!-- Added modal-lg for larger width -->
             <div class="modal-content">
+                <div class="modal-header border-0">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
                 <div class="modal-body">
-                    <div class="card shadow-sm p-2">
-                        <div class="gap-3 d-flex flex-row">
-                            <div class="">
-                                <img src="@item.Thumbnail" style="object-fit:cover;height:300px;width:250px;" alt="Alternate Text" />
+                    <div class="row">
+                        <div class="col-md-5">
+                            <img src="@item.Thumbnail" class="img-fluid rounded" alt="@item.ProductItemName">
+                        </div>
+                        <div class="col-md-7">
+                            <h4 class="fw-bold mb-3">@item.ProductItemName</h4>
+                            <div class="mb-3">
+                                <span class="badge bg-success p-2 fs-6 rounded-pill">Rs @item.UnitPrice</span>
                             </div>
-                            <div class="card flex-grow-1 p-4">
-                                <div class="gap-2 h-100">
-                                    <h5 class="card-title fw-bold mb-3"><strong>@item.ProductItemName</strong></h5>
-                                    <h6 class="card-subtitle mb-3 text-success fw-bold"><strong>$@item.UnitPrice</strong></h6>
-                                    <p class="card-text text-muted">@item.Description</p>
-                                </div>
-                                <div class="text-bottom">
-                                    <button type="button" class="btn btn-primary btn-sm btnCart flex-bottom mb-1" data-pk="@item.ProductItemId" data-name="@item.ProductItemName" data-price="@item.UnitPrice">
-                                        <i class="fa fa-cart-plus"></i> Add to Cart
-                                    </button>
-                                </div>
+                            <p class="text-muted mb-4">@item.Description</p>
+                            <div class="d-flex gap-2">
+                                <button type="button" class="btn btn-success btnCart" data-pk="@item.ProductItemId" data-name="@item.ProductItemName" data-price="@item.UnitPrice">
+                                    <i class="bi bi-cart-plus"></i> Add to Cart
+                                </button>
+                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                    Continue Shopping
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -151,39 +297,45 @@
     </div>
 }
 
-
 <!-- Swiper.js -->
 <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 
 @section Scripts {
     <script>
-
-        $(document).on('click', '.shopnow', function () {
-            window.location.href = window.location.origin + "/ProductItem/Cart"
-        })
-
-
         // Initialize Swiper for each category carousel
         document.addEventListener("DOMContentLoaded", function () {
-            document.querySelectorAll(".swiper").forEach(swiperElement => {
-                new Swiper(swiperElement, {
-                    slidesPerView: 4,
-                    spaceBetween: 20,
-                    loop: true,
-                    navigation: {
-                        nextEl: ".swiper-button-next",
-                        prevEl: ".swiper-button-prev",
-                    },
-                    breakpoints: {
-                        320: { slidesPerView: 1 },
-                        480: { slidesPerView: 2 },
-                        768: { slidesPerView: 3 },
-                        1024: { slidesPerView: 4 }
-                    }
+            // Initialize all swipers with their unique IDs
+        @foreach (var category in Model.CategoryInfo)
+        {
+            var categoryProducts = Model.ProductItems.Where(x => x.CategoryId == category.CategoryId).ToList();
+            if (categoryProducts.Any())
+            {
+                var swiperId = $"swiper-{category.CategoryId}";
+                <text>
+                        // Initialize swiper for category @category.CategoryName
+                        new Swiper('#@swiperId', {
+                            slidesPerView: 1,
+                            spaceBetween: 20,
+                            navigation: {
+                                nextEl: '#swiper-button-next-@category.CategoryId',
+                                prevEl: '#swiper-button-prev-@category.CategoryId',
+                            },
+                            pagination: {
+                                el: '#swiper-pagination-@category.CategoryId',
+                                clickable: true,
+                            },
+                            breakpoints: {
+                                576: { slidesPerView: 2 },
+                                768: { slidesPerView: 3 },
+                                992: { slidesPerView: 4 }
+                            }
+                        });
+                </text>
+            }
+        }
                 });
-            });
-        });
 
+        // Add to cart functionality
         $(document).on("click", ".btnCart", function () {
             var obj = {
                 Id: $(this).data("pk"),
@@ -198,13 +350,56 @@
 
             var existData = oldItemsJSON.filter(x => x.Id == obj.Id);
             if (existData && existData.length > 0) {
-                alert('Product Already in Cart');
+                showToast('Product already in cart', 'warning');
                 return;
             }
 
             oldItemsJSON.push(obj);
             localStorage.setItem('ls_product', JSON.stringify(oldItemsJSON));
-            alert('Product Added in Cart');
+            showToast('Product added to cart', 'success');
+
+            // Update cart count in the navbar
+            const event = new Event('storage');
+            event.key = 'ls_product';
+            window.dispatchEvent(event);
         });
+
+        // Toast notification function
+        function showToast(message, type) {
+            const toastContainer = document.createElement('div');
+            toastContainer.style.position = 'fixed';
+            toastContainer.style.top = '20px';
+            toastContainer.style.right = '20px';
+            toastContainer.style.zIndex = '9999';
+
+            const toast = document.createElement('div');
+            toast.className = `toast align-items-center text-white bg-${type} border-0`;
+            toast.setAttribute('role', 'alert');
+            toast.setAttribute('aria-live', 'assertive');
+            toast.setAttribute('aria-atomic', 'true');
+
+            toast.innerHTML = `
+                        <div class="d-flex">
+                            <div class="toast-body">
+                                ${message}
+                            </div>
+                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                    `;
+
+            toastContainer.appendChild(toast);
+            document.body.appendChild(toastContainer);
+
+            const bsToast = new bootstrap.Toast(toast, {
+                autohide: true,
+                delay: 3000
+            });
+
+            bsToast.show();
+
+            toast.addEventListener('hidden.bs.toast', function () {
+                document.body.removeChild(toastContainer);
+            });
+        }
     </script>
 }

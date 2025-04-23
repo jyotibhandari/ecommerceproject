@@ -1,0 +1,54 @@
+﻿@model ecom.Models.SingleCategoryVM
+
+@{
+    Layout = "_Layout";  // If you are using a layout page, make sure to include it
+}
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">@Model.CategoryInfo.CategoryName</h2>
+
+    <div class="row">
+        @foreach (var item in Model.ProductItems)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="@item.Thumbnail" class="card-img-top" style="height: 250px; object-fit: cover;" alt="Product Image">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.ProductItemName</h5>
+                        <p class="card-text">@item.Description</p>
+                        <p class="card-text text-success"><strong>$@item.UnitPrice</strong></p>
+                        <button type="button" class="btn btn-primary add-to-cart" data-id="@item.ProductItemId" data-name="@item.ProductItemName" data-price="@item.UnitPrice">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).on("click", ".add-to-cart", function () {
+            var product = {
+                Id: $(this).data("id"),
+                ProductName: $(this).data("name"),
+                UnitPrice: $(this).data("price"),
+                Quantity: 1,
+                Total: $(this).data("price")
+            };
+
+            var cartItems = JSON.parse(localStorage.getItem('cart') || '[]');
+
+            var existingItem = cartItems.find(item => item.Id === product.Id);
+            if (existingItem) {
+                alert('This product is already in your cart.');
+                return;
+            }
+
+            cartItems.push(product);
+            localStorage.setItem('cart', JSON.stringify(cartItems));
+            alert('Product added to cart!');
+        });
+    </script>
+}

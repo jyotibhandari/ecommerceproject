@@ -1,6 +1,7 @@
 ﻿using ecom.DAO;
 using ecom.Models;
 using ecom.Models.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -48,18 +49,7 @@ namespace ecom.Controllers
             var datas = _db.Category.ToList();
             return View(datas);
         }
-        public JsonResult GetCategories()
-        {
-            var datas = _db.Category.Select(x => new
-            {
-                categoryId = x.CategoryId,
-                categoryName = x.CategoryName,
-                categoryCode = x.CategoryCode,
-                createdAt = x.CreatedAt.ToString("yyyy-MM-dd")
-            }).ToList();
-
-            return Json(new { data = datas });
-        }
+        
 
         public JsonResult Save(int hiddenId, string CategoryName, string CategoryCode)
         {
@@ -106,6 +96,7 @@ namespace ecom.Controllers
             
         }
         }
+        
         public JsonResult Edit(int id)
         {
             var dbData = _db.Category.Where(x => x.CategoryId == id).FirstOrDefault();
